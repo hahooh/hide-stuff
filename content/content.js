@@ -1,25 +1,29 @@
+const hideClassName = 'hide-stuff-2020-10-09-hide'
+const hoverClassName = 'hide-stuff-2020-10-09-hover'
+
 function removeHoverClasses() {
-    const allElements = [...document.getElementsByClassName('hide-stuff-2020-10-09-hover')]
+    const allElements = [...document.getElementsByClassName(hoverClassName)]
     allElements.forEach(function (el) {
-        el.classList.remove('hide-stuff-2020-10-09-hover')
+        el.classList.remove(hoverClassName)
     })
 }
 
 function removeHiddenClasses() {
-    const hiddenElements = [...document.getElementsByClassName('hide-stuff-2020-10-09-hide')]
+    const hiddenElements = [...document.getElementsByClassName(hideClassName)]
     hiddenElements.forEach(function (el) {
-        el.classList.remove('hide-stuff-2020-10-09-hide')
+        el.classList.remove(hideClassName)
     })
 }
 
 function hoverEventHandler(ev) {
     removeHoverClasses()
-    ev.target.classList.add('hide-stuff-2020-10-09-hover')
+    ev.target.classList.add(hoverClassName)
 }
 
 function removeEventHandler(ev) {
     ev.preventDefault()
-    ev.target.classList.add('hide-stuff-2020-10-09-hide')
+    saveHiddenElement(ev.target.id || ev.target.className)
+    setHide(ev.target)
     onDeactive()
 }
 
@@ -35,11 +39,60 @@ function onDeactive() {
 
 }
 
+function setHide(el) {
+    el.classList.add(hideClassName)
+}
+
 function back() {
     removeHiddenClasses()
 }
 
+function getHiddenClasses(callback) {
+    chrome.storage.local.get(window.location.host, function (result) {
+        console.log(result, result[window.location.host])
+        if (Object.keys(result).length > 0) {
+            callback(result[window.location.host])
+        } else {
+            callback([])
+        }
+    })
+}
+
+function saveHiddenElement(indicator) {
+    indicator = indicator
+        .replace(hideClassName, "")
+        .replace(hoverClassName, "")
+        .trim()
+    getHiddenClasses(function (indicators) {
+        chrome.storage.local.set({ [window.location.host]: [...indicators, indicator] })
+    })
+}
+
+
+function init() {
+    getHiddenClasses(function (indicators) {
+        indicators.forEach(function (indicator) {
+            const el = document.getElementById(indicator);
+            if (el) {
+                return setHide(el);
+            }
+
+            [...document.getElementsByClassName(indicator)]
+                .forEach(function (e) {
+                    console.log(e)
+                    setHide(e)
+                })
+        })
+    })
+}
+
+function removeSave() {
+    removeHiddenClasses()
+    chrome.storage.local.set({ [window.location.host]: [] })
+}
+
 function onMessageHander(request, sender, sendReponse) {
+    console.log(request.message)
     switch (request.message) {
         case 'active':
             onActive()
@@ -50,7 +103,12 @@ function onMessageHander(request, sender, sendReponse) {
         case 'back':
             back()
             break;
+        case 'removeSave':
+            removeSave()
+            break;
     }
 }
 
 chrome.runtime.onMessage.addListener(onMessageHander)
+
+init()

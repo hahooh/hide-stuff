@@ -1,23 +1,44 @@
+function getActiveTab(callback) {
+    chrome.tabs.query({ currentWindow: true, active: true }, function (tabs) {
+        callback(tabs[0])
+    })
+}
+
+function sendMessage(activeTab, message) {
+    chrome.tabs.sendMessage(activeTab.id, { message });
+    console.log(message)
+}
+
+function onActive(activeTab) {
+    sendMessage(activeTab, 'active')
+}
+
+function onDeactive(activeTab) {
+    sendMessage(activeTab, 'deactive')
+}
+
+function onBack(activeTab) {
+    sendMessage(activeTab, 'back')
+}
+
+function removeSave(activeTab) {
+    sendMessage(activeTab, 'removeSave')
+}
+
 document.addEventListener("DOMContentLoaded", function () {
     document.getElementById('active').addEventListener('click', function () {
-        chrome.tabs.query({ currentWindow: true, active: true }, function (tabs) {
-            var activeTab = tabs[0];
-            console.log(tabs)
-            chrome.tabs.sendMessage(activeTab.id, { "message": "active" });
-        });
+        getActiveTab(onActive)
     })
 
     document.getElementById('deactive').addEventListener('click', function () {
-        chrome.tabs.query({ currentWindow: true, active: true }, function (tabs) {
-            var activeTab = tabs[0];
-            chrome.tabs.sendMessage(activeTab.id, { "message": "deactive" });
-        });
+        getActiveTab(onDeactive)
     })
 
     document.getElementById('back').addEventListener('click', function () {
-        chrome.tabs.query({ currentWindow: true, active: true }, function (tabs) {
-            var activeTab = tabs[0];
-            chrome.tabs.sendMessage(activeTab.id, { "message": "back" });
-        });
+        getActiveTab(onBack)
+    })
+
+    document.getElementById('remove-save').addEventListener('click', function () {
+        getActiveTab(removeSave)
     })
 });
