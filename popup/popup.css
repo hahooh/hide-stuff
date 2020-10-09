@@ -1,0 +1,13 @@
+body {
+    width: 250px;
+    height: 150px;
+    background-color: blanchedalmond;
+}
+
+.text-center {
+    text-align: center;
+}
+
+.bottom {
+    margin-top: 12px;
+}

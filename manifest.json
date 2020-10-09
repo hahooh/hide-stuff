@@ -1,0 +1,22 @@
+{
+    "manifest_version": 2,
+    "name": "Hide Stuff",
+    "version": "1.0.0",
+    "description": "Hide stuff that you don't want to see",
+    "content_scripts": [
+        {
+            "css": [
+                "./content/style.css"
+            ],
+            "matches": [
+                "<all_urls>"
+            ],
+            "js": [
+                "./content/content.js"
+            ]
+        }
+    ],
+    "browser_action": {
+        "default_popup": "./popup/popup.html"
+    }
+}
