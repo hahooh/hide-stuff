@@ -21,6 +21,7 @@ function hoverEventHandler(ev) {
 }
 
 function removeEventHandler(ev) {
+    console.log(ev.target)
     ev.preventDefault()
     saveHiddenElement(ev.target.id || ev.target.className)
     setHide(ev.target)
@@ -63,7 +64,8 @@ function saveHiddenElement(indicator) {
         .replace(hoverClassName, "")
         .trim()
     getHiddenClasses(function (indicators) {
-        chrome.storage.local.set({ [window.location.host]: [...indicators, indicator] })
+        const newIndicators = new Set([...indicators, indicator])
+        chrome.storage.local.set({ [window.location.host]: Array.from(newIndicators) })
     })
 }
 
