@@ -11,3 +11,11 @@ body {
 .bottom {
     margin-top: 12px;
 }
+
+.half-block {
+    width: 49%;
+}
+
+.block {
+    width: 98%;
+}
