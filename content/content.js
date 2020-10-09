@@ -49,7 +49,6 @@ function back() {
 
 function getHiddenClasses(callback) {
     chrome.storage.local.get(window.location.host, function (result) {
-        console.log(result, result[window.location.host])
         if (Object.keys(result).length > 0) {
             callback(result[window.location.host])
         } else {
@@ -69,7 +68,7 @@ function saveHiddenElement(indicator) {
 }
 
 
-function init() {
+function hideAgain() {
     getHiddenClasses(function (indicators) {
         indicators.forEach(function (indicator) {
             const el = document.getElementById(indicator);
@@ -79,11 +78,14 @@ function init() {
 
             [...document.getElementsByClassName(indicator)]
                 .forEach(function (e) {
-                    console.log(e)
                     setHide(e)
                 })
         })
     })
+}
+
+function init() {
+    hideAgain()
 }
 
 function removeSave() {
@@ -105,6 +107,9 @@ function onMessageHander(request, sender, sendReponse) {
             break;
         case 'removeSave':
             removeSave()
+            break;
+        case 'hideAgain':
+            hideAgain()
             break;
     }
 }

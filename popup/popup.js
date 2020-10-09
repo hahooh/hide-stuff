@@ -21,6 +21,10 @@ function onBack(activeTab) {
     sendMessage(activeTab, 'back')
 }
 
+function onHideBack(activeTab) {
+    sendMessage(activeTab, 'hideAgain')
+}
+
 function removeSave(activeTab) {
     sendMessage(activeTab, 'removeSave')
 }
@@ -36,6 +40,10 @@ document.addEventListener("DOMContentLoaded", function () {
 
     document.getElementById('back').addEventListener('click', function () {
         getActiveTab(onBack)
+    })
+
+    document.getElementById('hide-again').addEventListener('click', function () {
+        getActiveTab(onHideBack)
     })
 
     document.getElementById('remove-save').addEventListener('click', function () {
