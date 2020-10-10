@@ -33,13 +33,14 @@ function removeEventHandler(ev) {
 function onActive() {
     document.addEventListener('mouseover', hoverEventHandler)
     document.addEventListener('click', removeEventHandler)
+    active = true
 }
 
 function onDeactive() {
     removeHoverClasses()
     document.removeEventListener('mouseover', hoverEventHandler)
     document.removeEventListener('click', removeEventHandler)
-
+    active = false
 }
 
 function setHide(el) {
@@ -116,13 +117,11 @@ function onMessageHander(request, sender, sendReponse) {
         case 'active':
             if (!active) {
                 onActive()
-                active = true
             }
             break;
         case 'deactive':
             if (active) {
                 onDeactive()
-                active = false
             }
             break;
         case 'back':
