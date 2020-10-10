@@ -8,7 +8,6 @@ function getActiveTab(callback) {
 
 function sendMessage(activeTab, message) {
     chrome.tabs.sendMessage(activeTab.id, { message });
-    console.log(message)
 }
 
 function onActive(activeTab) {

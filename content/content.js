@@ -2,6 +2,8 @@ const CURRENT_HOST = 'current-host'
 const hideClassName = 'hide-stuff-2020-10-09-hide'
 const hoverClassName = 'hide-stuff-2020-10-09-hover'
 
+let active = false
+
 function removeHoverClasses() {
     const allElements = [...document.getElementsByClassName(hoverClassName)]
     allElements.forEach(function (el) {
@@ -22,7 +24,6 @@ function hoverEventHandler(ev) {
 }
 
 function removeEventHandler(ev) {
-    console.log(ev.target)
     ev.preventDefault()
     saveHiddenElement(ev.target.id || ev.target.className)
     setHide(ev.target)
@@ -104,22 +105,25 @@ function removeAllSaved() {
     chrome.storage.local.get(function (result) {
         for (let key in result) {
             if (key !== CURRENT_HOST) {
-                chrome.storage.local.remove(key, function () {
-                    console.log("%s deleted", key)
-                })
+                chrome.storage.local.remove(key, function () { })
             }
         }
     })
 }
 
 function onMessageHander(request, sender, sendReponse) {
-    console.log(request.message)
     switch (request.message) {
         case 'active':
-            onActive()
+            if (!active) {
+                onActive()
+                active = true
+            }
             break;
         case 'deactive':
-            onDeactive()
+            if (active) {
+                onDeactive()
+                active = false
+            }
             break;
         case 'back':
             back()
