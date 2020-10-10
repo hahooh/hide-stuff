@@ -1,3 +1,4 @@
+const CURRENT_HOST = 'current-host'
 const hideClassName = 'hide-stuff-2020-10-09-hide'
 const hoverClassName = 'hide-stuff-2020-10-09-hover'
 
@@ -63,10 +64,13 @@ function saveHiddenElement(indicator) {
         .replace(hideClassName, "")
         .replace(hoverClassName, "")
         .trim()
-    getHiddenClasses(function (indicators) {
-        const newIndicators = new Set([...indicators, indicator])
-        chrome.storage.local.set({ [window.location.host]: Array.from(newIndicators) })
-    })
+
+    if (indicator) {
+        getHiddenClasses(function (indicators) {
+            const newIndicators = new Set([...indicators, indicator])
+            chrome.storage.local.set({ [window.location.host]: Array.from(newIndicators) })
+        })
+    }
 }
 
 
@@ -88,11 +92,25 @@ function hideAgain() {
 
 function init() {
     hideAgain()
+    console.log({ [CURRENT_HOST]: window.location.host })
+    chrome.storage.local.set({ [CURRENT_HOST]: window.location.host })
 }
 
 function removeSave() {
     removeHiddenClasses()
     chrome.storage.local.set({ [window.location.host]: [] })
+}
+
+function removeAllSaved() {
+    chrome.storage.local.get(function (result) {
+        for (let key in result) {
+            if (key !== CURRENT_HOST) {
+                chrome.storage.local.remove(key, function () {
+                    console.log("%s deleted", key)
+                })
+            }
+        }
+    })
 }
 
 function onMessageHander(request, sender, sendReponse) {
@@ -112,6 +130,9 @@ function onMessageHander(request, sender, sendReponse) {
             break;
         case 'hideAgain':
             hideAgain()
+            break;
+        case 'removeAllSaved':
+            removeAllSaved()
             break;
     }
 }

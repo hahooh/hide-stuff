@@ -6,7 +6,15 @@
 <script src="popup.js"></script>
 
 <body>
-    <h1 class="text-center">Hide Stuff</h1>
+    <h1 class="mb0">Hide Stuff</h1>
+    <hr>
+    <div>
+        <div id="total-hiddens"></div>
+        <div id='current-hiddens'>
+            Current page hiddens: <span id="current-hiddens-count"></span>
+        </div>
+    </div>
+    <hr>
     <div class="top text-center">
         <button id="active" class="block">Active select</button>
     </div>
@@ -20,10 +28,14 @@
         <button id='hide-again' class="block">Hide hiddens again</button>
     </div>
     <div class="bottom text-center">
-        <button id="remove-save" class="block">Remove all saved hiddens</button>
+        <button id="remove-save" class="block">Remove all saved hiddens from current page</button>
     </div>
+    <div class="bottom text-center">
+        <button id="remove-all-saved" class="block">Remove all saved hiddens</button>
+    </div>
+    <hr>
     <div>
-        <h2 class="text-center">Thank you for using Hide Stuff</h2>
+        <h2 class="text-center mt0">Thank you for using Hide Stuff</h2>
     </div>
 </body>
 

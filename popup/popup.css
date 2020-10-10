@@ -4,6 +4,14 @@ body {
     background-color: blanchedalmond;
 }
 
+.mt0 {
+    margin-top: 0;
+}
+
+.mb0 {
+    margin-bottom: 0;
+}
+
 .text-center {
     text-align: center;
 }

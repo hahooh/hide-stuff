@@ -25,6 +25,8 @@
         "128": "./icons/128x128.png"
     },
     "permissions": [
-        "storage"
+        "storage",
+        "activeTab",
+        "tabs"
     ]
 }
