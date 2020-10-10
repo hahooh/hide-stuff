@@ -92,7 +92,6 @@ function hideAgain() {
 
 function init() {
     hideAgain()
-    console.log({ [CURRENT_HOST]: window.location.host })
     chrome.storage.local.set({ [CURRENT_HOST]: window.location.host })
 }
 

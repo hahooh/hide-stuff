@@ -35,58 +35,69 @@ function removeAllSaved(activeTab) {
     sendMessage(activeTab, 'removeAllSaved')
 }
 
-function getAllHiddenClasses(callback) {
-    chrome.storage.local.get(callback)
+function getCurrentHost(callback) {
+    chrome.storage.local.get(CURRENT_HOST, function (result) {
+        callback(result[CURRENT_HOST])
+    })
 }
 
-function getHiddenClasses(callback) {
-    getActiveTab(function (activeTab) {
+function getHiddenIndicators(host, callback) {
+    if (typeof host === 'string') {
+        chrome.storage.local.get(host, function (result) {
+            if (Object.keys(result).length > 0) {
+                callback(result[host])
+            } else {
+                callback([])
+            }
+        })
+    } else {
+        chrome.storage.local.get(function (result) {
+            let indicators = []
+            for (let key in result) {
+                if (key !== CURRENT_HOST) {
+                    indicators = [...indicators, ...result[key]]
+                }
+            }
+            host(indicators)
+        })
+    }
+}
 
-        callback(activeTab)
-        // chrome.storage.local.get(window.location.host, function (result) {
-        //     if (Object.keys(result).length > 0) {
-        //         callback(result[window.location.host])
-        //     } else {
-        //         callback([])
-        //     }
-        // })
+function setAllHiddenCount() {
+    getHiddenIndicators(function (indicators) {
+        document.getElementById('all-hiddens').innerText = indicators.length
+    })
+}
+
+function setCurrentHostHiddenCount(curHost) {
+    getHiddenIndicators(curHost, function (indicators) {
+        document.getElementById("current-hiddens-count").innerText = indicators.length
     })
 }
 
 function onCurrentHostChanges(curHost) {
-    console.log(curHost)
-    chrome.storage.local.get(curHost, function (result) {
-        let classes = []
-        if (Object.keys(result).length > 0) {
-            classes = result[curHost]
-        }
+    setCurrentHostHiddenCount(curHost)
+}
 
-        document.getElementById("current-hiddens-count").innerText = classes.length
-    })
+function setHiddenCounts() {
+    setAllHiddenCount()
+    getCurrentHost(setCurrentHostHiddenCount)
 }
 
 function init() {
-    console.log('init')
     chrome.storage.onChanged.addListener(function (changes, namespace) {
         for (var key in changes) {
             switch (key) {
                 case CURRENT_HOST:
                     onCurrentHostChanges(changes[key].newValue)
-                    break
+                    break;
+                default:
+                    setHiddenCounts()
             }
         }
     })
 
-    chrome.storage.local.get(function (result) {
-        console.log(result)
-        for (var key in result) {
-            if (key !== CURRENT_HOST) {
-                console.log(key, result[key])
-            } else {
-                console.log(key, result)
-            }
-        }
-    })
+    setHiddenCounts()
 }
 
 document.addEventListener("DOMContentLoaded", function () {
