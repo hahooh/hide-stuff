@@ -108,6 +108,10 @@ function init() {
                 case SELECT_MODE:
                     getItemFromStorage(SELECT_MODE, function (isActive) {
                         document.getElementById(ACTIVE_SELECT_MODE_ID).checked = isActive
+                        if (!isActive) {
+                            document.getElementById(SHOW_HIDDEN_CONTENTS_ID).checked = false
+                            document.getElementById(SHOW_HIDDEN_CONTENTS_ID).disabled = false
+                        }
                     })
                     break;
                 default:
