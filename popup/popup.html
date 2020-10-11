@@ -2,6 +2,7 @@
 
 <head>
     <link rel="stylesheet" type="text/css" href="popup.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins">
 </head>
 <script src="popup.js"></script>
 
@@ -12,38 +13,39 @@
         <span id="hide-stuff-title" class="ml1">Hide stuff</span>
     </div>
     <hr>
-    <div class="py3">
+    <div class="py3 mb2">
         <div id="total-hiddens">
-            All hiddens: <strong id="all-hiddens"></strong>
+            All Hidden: <strong id="all-hiddens"></strong>
         </div>
         <div id='current-hiddens'>
-            Current page hiddens: <strong id="current-hiddens-count"></strong>
+            Current Page Hidden: <strong id="current-hiddens-count"></strong>
         </div>
     </div>
     <hr>
-    <div class="py3 flex space-between">
+    <div class="py3 flex space-between mb2">
         <span>Active Select Mode</span>
         <label class="switch">
             <input id="active-select-mode" type="checkbox">
             <span class="slider round"></span>
         </label>
     </div>
-    <div class="py3 flex space-between mt1">
+    <hr>
+    <div class="py3 flex space-between mb2">
         <span>Show Hidden Contents</span>
         <label class="switch">
             <input id="show-hidden-contents" type="checkbox">
             <span class="slider round"></span>
         </label>
     </div>
-    <br>
-    <div class="bottom text-center">
-        <button id="remove-save" class="block">Remove all saved hiddens from current page</button>
+    <hr>
+    <div class="py3 bottom text-center mt3">
+        <button id="remove-save" class="block btn">Reset Current Page</button>
     </div>
-    <div class="bottom text-center">
-        <button id="remove-all-saved" class="block">Remove all saved hiddens</button>
+    <div class="py3 bottom text-center mt2 mb3">
+        <button id="remove-all-saved" class="block btn">Reset All Pages</button>
     </div>
     <hr>
-    <div class="bottom text-center mb2">
+    <div class="py3 bottom text-center mb2">
         <span>You can check out source code from <a href="www.github.com">github page</a></span>
     </div>
 </body>

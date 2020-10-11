@@ -1,5 +1,6 @@
 body {
-    width: 185px;
+  width: 200px;
+  font-family: "Poppins";
 }
 
 .text-center {
@@ -38,12 +39,24 @@ body {
     margin-top: 4px;
 }
 
+.mt2 {
+  margin-top: 8px;
+}
+
+.mt3 {
+  margin-top: 12px;
+}
+
 .mb1 {
     margin-bottom: 4px;
 }
 
 .mb2 {
     margin-bottom: 8px;
+}
+
+.mb3 {
+  margin-bottom: 12px;
 }
 
 .py3 {
@@ -113,4 +126,37 @@ input:checked + .slider:before {
 
 .slider.round:before {
   border-radius: 50%;
+}
+
+button {
+  all: unset;
+}
+
+.block {
+  width: 100%;
+}
+
+.btn {
+  display: inline-block;
+  background-color: #75B3E2;
+  color: #FFFFFF;
+  box-shadow: 0px 3px 6px #00000029;
+  padding: 5px 3px 5px 3px;
+  border-radius: 5px;
+}
+
+.btn:hover {
+  background-color: #8bc6f3;
+}
+
+.btn:active {
+  background-color: #eeeeee;
+  color: gray;
+}
+
+hr {
+  height: 1px;
+  background-color: #eeeeee;
+  border: none;
+  margin-bottom: 8px;
 }

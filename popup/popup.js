@@ -122,7 +122,7 @@ function init() {
 document.addEventListener("DOMContentLoaded", function () {
     document.getElementById(ACTIVE_SELECT_MODE_ID).addEventListener('click', function (ev) {
         if (ev.target.checked) {
-            // hide everything again
+            // disable show hidden switch
             document.getElementById(SHOW_HIDDEN_CONTENTS_ID).checked = false
             document.getElementById(SHOW_HIDDEN_CONTENTS_ID).disabled = true
             getActiveTab(onHideBack)
@@ -136,7 +136,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     document.getElementById(SHOW_HIDDEN_CONTENTS_ID).addEventListener('click', function (ev) {
         if (ev.target.checked) {
-            // deactivate select mode
+            // disable active select model switch
             document.getElementById(ACTIVE_SELECT_MODE_ID).checked = false
             document.getElementById(ACTIVE_SELECT_MODE_ID).disabled = true
             getActiveTab(onDeactive)
