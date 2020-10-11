@@ -117,6 +117,10 @@ function init() {
     })
 
     setHiddenCounts()
+
+    getItemFromStorage(SELECT_MODE, function (isActive) {
+        document.getElementById(ACTIVE_SELECT_MODE_ID).checked = isActive
+    })
 }
 
 document.addEventListener("DOMContentLoaded", function () {
