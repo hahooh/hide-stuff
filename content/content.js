@@ -1,8 +1,9 @@
 const CURRENT_HOST = 'current-host'
+const SELECT_MODE = 'select-mode'
 const hideClassName = 'hide-stuff-2020-10-09-hide'
 const hoverClassName = 'hide-stuff-2020-10-09-hover'
 
-let active = false
+const systemKeys = [CURRENT_HOST, SELECT_MODE]
 
 function removeHoverClasses() {
     const allElements = [...document.getElementsByClassName(hoverClassName)]
@@ -27,37 +28,50 @@ function removeEventHandler(ev) {
     ev.preventDefault()
     saveHiddenElement(ev.target.id || ev.target.className)
     setHide(ev.target)
-    onDeactive()
+    deactiveSelectMode()
 }
 
-function onActive() {
-    document.addEventListener('mouseover', hoverEventHandler)
-    document.addEventListener('click', removeEventHandler)
-    active = true
+function activeSelectMode() {
+    getItemFromStorage(SELECT_MODE, function (result) {
+        console.log(result)
+        if (!result) {
+            document.addEventListener('mouseover', hoverEventHandler)
+            document.addEventListener('click', removeEventHandler)
+            chrome.storage.local.set({ [SELECT_MODE]: true })
+        }
+    })
 }
 
-function onDeactive() {
+function deactiveSelectMode() {
     removeHoverClasses()
     document.removeEventListener('mouseover', hoverEventHandler)
     document.removeEventListener('click', removeEventHandler)
-    active = false
+    chrome.storage.local.set({ [SELECT_MODE]: false })
 }
 
 function setHide(el) {
     el.classList.add(hideClassName)
 }
 
-function back() {
+function showHiddens() {
     removeHiddenClasses()
 }
 
-function getHiddenClasses(callback) {
-    chrome.storage.local.get(window.location.host, function (result) {
+function getItemFromStorage(key, callback) {
+    chrome.storage.local.get(key, function (result) {
         if (Object.keys(result).length > 0) {
-            callback(result[window.location.host])
-        } else {
-            callback([])
+            return callback(result[key])
         }
+        return callback(null)
+    })
+}
+
+function getHiddenClasses(callback) {
+    getItemFromStorage(window.location.host, function (result) {
+        if (result) {
+            return callback(result)
+        }
+        return callback([])
     })
 }
 
@@ -103,9 +117,10 @@ function removeSave() {
 }
 
 function removeAllSaved() {
+    removeHiddenClasses()
     chrome.storage.local.get(function (result) {
         for (let key in result) {
-            if (key !== CURRENT_HOST) {
+            if (!systemKeys.includes(key)) {
                 chrome.storage.local.remove(key, function () { })
             }
         }
@@ -114,18 +129,14 @@ function removeAllSaved() {
 
 function onMessageHander(request, sender, sendReponse) {
     switch (request.message) {
-        case 'active':
-            if (!active) {
-                onActive()
-            }
+        case 'activeSelectMode':
+            activeSelectMode()
             break;
-        case 'deactive':
-            if (active) {
-                onDeactive()
-            }
+        case 'deactiveSelectMode':
+            deactiveSelectMode()
             break;
-        case 'back':
-            back()
+        case 'showHiddens':
+            showHiddens()
             break;
         case 'removeSave':
             removeSave()

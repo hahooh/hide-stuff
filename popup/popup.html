@@ -6,29 +6,36 @@
 <script src="popup.js"></script>
 
 <body>
-    <h1 class="mb0">Hide Stuff</h1>
+    <!-- <h1 class="mb0">Hide Stuff</h1> -->
+    <div class="flex justify-center">
+        <img id="hide-stuff-logo" src="../icons/16x16.png" alt="hide stuff logo">
+        <span id="hide-stuff-title" class="ml1">Hide stuff</span>
+    </div>
     <hr>
-    <div>
+    <div class="py3">
         <div id="total-hiddens">
-            All hiddens: <span id="all-hiddens"></span>
+            All hiddens: <strong id="all-hiddens"></strong>
         </div>
         <div id='current-hiddens'>
-            Current page hiddens: <span id="current-hiddens-count"></span>
+            Current page hiddens: <strong id="current-hiddens-count"></strong>
         </div>
     </div>
     <hr>
-    <div class="top text-center">
-        <button id="active" class="block">Active select</button>
+    <div class="py3 flex space-between">
+        <span>Active Select Mode</span>
+        <label class="switch">
+            <input id="active-select-mode" type="checkbox">
+            <span class="slider round"></span>
+        </label>
     </div>
-    <div class="bottom text-center">
-        <button id='deactive' class="block">Deactive select</button>
+    <div class="py3 flex space-between mt1">
+        <span>Show Hidden Contents</span>
+        <label class="switch">
+            <input id="show-hidden-contents" type="checkbox">
+            <span class="slider round"></span>
+        </label>
     </div>
-    <div class="bottom text-center">
-        <button id="back" class="block">Bring back hiddens</button>
-    </div>
-    <div class="bottom text-center">
-        <button id='hide-again' class="block">Hide hiddens again</button>
-    </div>
+    <br>
     <div class="bottom text-center">
         <button id="remove-save" class="block">Remove all saved hiddens from current page</button>
     </div>
@@ -36,8 +43,11 @@
         <button id="remove-all-saved" class="block">Remove all saved hiddens</button>
     </div>
     <hr>
-    <div>
-        <h2 class="text-center mt0">Thank you for using Hide Stuff</h2>
+    <div class="bottom text-center mb1">
+        <span>Buy me a coffee <a href="www.google.com">here</a></span>
+    </div>
+    <div class="bottom text-center mb2">
+        <span>You can check out source code from <a href="www.github.com">github page</a></span>
     </div>
 </body>
 
