@@ -2,6 +2,7 @@ const CURRENT_HOST = 'current-host'
 const SELECT_MODE = 'select-mode'
 const hideClassName = 'hide-stuff-2020-10-09-hide'
 const hoverClassName = 'hide-stuff-2020-10-09-hover'
+const errorSnackbarId = 'hide-stuff-2020-10-12-error-snackbar'
 
 const systemKeys = [CURRENT_HOST, SELECT_MODE]
 
@@ -26,14 +27,30 @@ function hoverEventHandler(ev) {
 
 function removeEventHandler(ev) {
     ev.preventDefault()
-    saveHiddenElement(ev.target.id || ev.target.className)
+    const id = ev.target.id
+    const className = (ev.target.className || '')
+        .replace(hideClassName, "")
+        .replace(hoverClassName, "")
+        .trim()
+
+    saveHiddenElement(id || className)
     setHide(ev.target)
     deactiveSelectMode()
+
+    if (id) {
+        return
+    }
+
+    if (className) {
+        showErrorSnackBar("This action might hide other stuff that you don't want when you revisit")
+        return
+    }
+
+    showErrorSnackBar("Cannot hide when you revisit")
 }
 
 function activeSelectMode() {
     getItemFromStorage(SELECT_MODE, function (result) {
-        console.log(result)
         if (!result) {
             document.addEventListener('mouseover', hoverEventHandler)
             document.addEventListener('click', removeEventHandler)
@@ -76,11 +93,6 @@ function getHiddenClasses(callback) {
 }
 
 function saveHiddenElement(indicator) {
-    indicator = indicator
-        .replace(hideClassName, "")
-        .replace(hoverClassName, "")
-        .trim()
-
     if (indicator) {
         getHiddenClasses(function (indicators) {
             const newIndicators = new Set([...indicators, indicator])
@@ -108,6 +120,7 @@ function hideAgain() {
 
 function init() {
     hideAgain()
+    insertErrorSnackBar()
     chrome.storage.local.set({ [CURRENT_HOST]: window.location.host })
 }
 
@@ -125,6 +138,27 @@ function removeAllSaved() {
             }
         }
     })
+}
+
+function showErrorSnackBar(message) {
+    const errorSnackBar = document.getElementById(errorSnackbarId)
+    errorSnackBar.style.display = 'flex'
+    errorSnackBar.innerText = message
+    errorSnackBar.classList.add('hide-stuff-2020-10-12-show-animation')
+    setTimeout(function () {
+        errorSnackBar.classList.add('hide-stuff-2020-10-12-hide-animation')
+        setTimeout(function () {
+            errorSnackBar.style.display = 'none'
+            errorSnackBar.classList.remove('hide-stuff-2020-10-12-show-animation')
+            errorSnackBar.classList.remove('hide-stuff-2020-10-12-hide-animation')
+        }, 350)
+    }, 2500)
+}
+
+function insertErrorSnackBar() {
+    const div = document.createElement('div')
+    div.id = errorSnackbarId
+    document.body.append(div)
 }
 
 function onMessageHander(request, sender, sendReponse) {

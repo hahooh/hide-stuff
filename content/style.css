@@ -1,3 +1,28 @@
+#hide-stuff-2020-10-12-error-snackbar {
+    position: fixed;
+    background-color: rgba(163, 67, 67, .985);
+    width: 200px;
+    bottom: 10px;
+    left: calc(50% - 125px);
+    color: white;
+    font-weight: bold;
+    z-index: 999;
+    align-content: center;
+    justify-content: center;
+    text-align: center;
+    display: none;
+    border-radius: 5px;
+    padding: 5px;
+}
+
+.hide-stuff-2020-10-12-show-animation {
+    animation: show .4s ease-in none;
+}
+
+.hide-stuff-2020-10-12-hide-animation {
+    animation: hide .4s ease-out none;
+}
+
 .hide-stuff-2020-10-09-hover {
     border: 1px dotted black !important;
     background-color: #eeeeee !important;
@@ -5,4 +30,20 @@
 
 .hide-stuff-2020-10-09-hide {
     display: none !important;
+}
+
+@keyframes show {
+    0% {background-color: rgba(163, 67, 67, .15);}
+    25% {background-color: rgba(163, 67, 67, .35);}
+    50% {background-color: rgba(163, 67, 67, .50);}
+    75% {background-color: rgba(163, 67, 67, .75);}
+    100% {background-color: rgba(163, 67, 67, .985);}
+}
+
+@keyframes hide {
+    0% {background-color: rgba(163, 67, 67, .75);}
+    25% {background-color: rgba(163, 67, 67, .50);}
+    50% {background-color: rgba(163, 67, 67, .35);}
+    75% {background-color: rgba(163, 67, 67, .15);}
+    100% {background-color: rgba(163, 67, 67, .00);}
 }
