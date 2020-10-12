@@ -13,4 +13,4 @@ If you want to support me you can do it from https://www.buymeacoffee.com/hahooh
 Thank you for your time and support and I hope you will like my other projects :) 
 
 ## License
-<a href="MIT https://github.com/hahooh/hide-stuff/blob/master/LICENSE">MIT</a>
+[MIT](https://github.com/hahooh/hide-stuff/blob/master/LICENSE")
