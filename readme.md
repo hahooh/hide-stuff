@@ -1,4 +1,7 @@
 # Hide Stuff
+Is a chrome extension that can hide stuffs on web page that are blocking contents or disturbing you. 
 
-### What is it for
-Hide stuff on web pages when they are blocking contents from us
+## Future features
+* Show cannot save errors when it cannot save indicators
+* Show warning if indicators are from class
+* maybe better way to store hidden elements
