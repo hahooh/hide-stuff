@@ -31,6 +31,14 @@ body {
     align-self: center;
 }
 
+#active-select-mode {
+  display: none;
+}
+
+#deactive-select-mode {
+  display: none;
+}
+
 .ml1 {
     margin-left: 4px;
 }
@@ -152,6 +160,10 @@ button {
 .btn:active {
   background-color: #eeeeee;
   color: gray;
+}
+
+.btn:disabled {
+  background-color: grey;
 }
 
 hr {

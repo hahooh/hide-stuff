@@ -1,8 +1,11 @@
 const CURRENT_HOST = 'current-host'
 const SELECT_MODE = 'select-mode'
+
 const hideClassName = 'hide-stuff-2020-10-09-hide'
 const hoverClassName = 'hide-stuff-2020-10-09-hover'
 const errorSnackbarId = 'hide-stuff-2020-10-12-error-snackbar'
+const showAnimationClassName = 'hide-stuff-2020-10-12-show-animation'
+const hideAnimationClassName = 'hide-stuff-2020-10-12-hide-animation'
 
 const systemKeys = [CURRENT_HOST, SELECT_MODE]
 
@@ -35,7 +38,6 @@ function removeEventHandler(ev) {
 
     saveHiddenElement(id || className)
     setHide(ev.target)
-    deactiveSelectMode()
 
     if (id) {
         return
@@ -144,13 +146,13 @@ function showErrorSnackBar(message) {
     const errorSnackBar = document.getElementById(errorSnackbarId)
     errorSnackBar.style.display = 'flex'
     errorSnackBar.innerText = message
-    errorSnackBar.classList.add('hide-stuff-2020-10-12-show-animation')
+    errorSnackBar.classList.add(showAnimationClassName)
     setTimeout(function () {
-        errorSnackBar.classList.add('hide-stuff-2020-10-12-hide-animation')
+        errorSnackBar.classList.add(hideAnimationClassName)
         setTimeout(function () {
             errorSnackBar.style.display = 'none'
-            errorSnackBar.classList.remove('hide-stuff-2020-10-12-show-animation')
-            errorSnackBar.classList.remove('hide-stuff-2020-10-12-hide-animation')
+            errorSnackBar.classList.remove(showAnimationClassName)
+            errorSnackBar.classList.remove(hideAnimationClassName)
         }, 350)
     }, 2500)
 }

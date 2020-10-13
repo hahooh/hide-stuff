@@ -2,6 +2,7 @@ const CURRENT_HOST = 'current-host'
 const SELECT_MODE = 'select-mode'
 
 const ACTIVE_SELECT_MODE_ID = 'active-select-mode'
+const DEACTIVE_SELECT_MODE_ID = 'deactive-select-mode'
 const SHOW_HIDDEN_CONTENTS_ID = 'show-hidden-contents'
 
 const systemKeys = [CURRENT_HOST, SELECT_MODE]
@@ -98,21 +99,29 @@ function getItemFromStorage(key, callback) {
     })
 }
 
+function setActivateButton() {
+    document.getElementById(ACTIVE_SELECT_MODE_ID).style.display = 'inline-block'
+    document.getElementById(DEACTIVE_SELECT_MODE_ID).style.display = 'none'
+}
+
+function setDeactivateButton() {
+    document.getElementById(ACTIVE_SELECT_MODE_ID).style.display = 'none'
+    document.getElementById(DEACTIVE_SELECT_MODE_ID).style.display = 'inline-block'
+}
+
+function setActivationButton(isActive) {
+    if (isActive) {
+        return setDeactivateButton()
+    }
+    setActivateButton()
+}
+
 function init() {
     chrome.storage.onChanged.addListener(function (changes, namespace) {
         for (var key in changes) {
             switch (key) {
                 case CURRENT_HOST:
                     onCurrentHostChanges(changes[key].newValue)
-                    break;
-                case SELECT_MODE:
-                    getItemFromStorage(SELECT_MODE, function (isActive) {
-                        document.getElementById(ACTIVE_SELECT_MODE_ID).checked = isActive
-                        if (!isActive) {
-                            document.getElementById(SHOW_HIDDEN_CONTENTS_ID).checked = false
-                            document.getElementById(SHOW_HIDDEN_CONTENTS_ID).disabled = false
-                        }
-                    })
                     break;
                 default:
                     setHiddenCounts()
@@ -123,32 +132,35 @@ function init() {
     setHiddenCounts()
 
     getItemFromStorage(SELECT_MODE, function (isActive) {
-        document.getElementById(ACTIVE_SELECT_MODE_ID).checked = isActive
+        setActivationButton(isActive)
     })
 }
 
 document.addEventListener("DOMContentLoaded", function () {
     document.getElementById(ACTIVE_SELECT_MODE_ID).addEventListener('click', function (ev) {
-        if (ev.target.checked) {
-            // disable show hidden switch
-            document.getElementById(SHOW_HIDDEN_CONTENTS_ID).checked = false
-            document.getElementById(SHOW_HIDDEN_CONTENTS_ID).disabled = true
-            getActiveTab(onHideBack)
+        // reset show hidden stuffs
+        document.getElementById(SHOW_HIDDEN_CONTENTS_ID).checked = false
+        document.getElementById(SHOW_HIDDEN_CONTENTS_ID).disabled = true
+        getActiveTab(onHideBack)
 
-            return getActiveTab(onActive)
-        }
+        setActivationButton(true)
+        getActiveTab(onActive)
 
+        window.close()
+    })
+
+    document.getElementById(DEACTIVE_SELECT_MODE_ID).addEventListener('click', function (ev) {
+        // allow show hidden stuffs
         document.getElementById(SHOW_HIDDEN_CONTENTS_ID).disabled = false
+
+        setActivationButton(false)
         getActiveTab(onDeactive)
     })
 
     document.getElementById(SHOW_HIDDEN_CONTENTS_ID).addEventListener('click', function (ev) {
         if (ev.target.checked) {
-            // disable active select model switch
-            document.getElementById(ACTIVE_SELECT_MODE_ID).checked = false
             document.getElementById(ACTIVE_SELECT_MODE_ID).disabled = true
             getActiveTab(onDeactive)
-
             return getActiveTab(onShowHiddens)
         }
 
