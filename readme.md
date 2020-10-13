@@ -2,7 +2,8 @@
 Is a chrome extension that can hide stuffs on web page that are blocking contents or disturbing you. 
 
 ## Future features
-* maybe better way to store hidden elements
+* try with path of the element to remember which element user hide
+* better ui for errors
 
 ## How to install
 * Follow instructions from https://developer.chrome.com/extensions/getstarted#manifest
