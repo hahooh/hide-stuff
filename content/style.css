@@ -26,6 +26,7 @@
 .hide-stuff-2020-10-09-hover {
     border: 1px dotted black !important;
     background-color: #eeeeee !important;
+    cursor: pointer;
 }
 
 .hide-stuff-2020-10-09-hide {
