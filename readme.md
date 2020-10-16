@@ -11,10 +11,10 @@ Is a chrome extension that can hide stuffs on web page that are blocking content
 ## How to install
 * Follow instructions from https://developer.chrome.com/extensions/getstarted#manifest
 
-## Buy me a hot chocolate
-If you want to support me you can do it from https://www.buymeacoffee.com/hahooh. Your money will be spent on my <b>Hot Chocolate</b>, sometimes <b>beer</b> and other <b>open source projects</b> to maintain server and domain fees.
+## If you like my project
+<a href="https://www.buymeacoffee.com/hahooh" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/default-orange.png" alt="Buy Me A Hot Chocolate" height="41" width="174"></a>
 
 Thank you for your time and support and I hope you will like my other projects :) 
 
-## License
+## License 
 [MIT](https://github.com/hahooh/hide-stuff/blob/master/LICENSE)
