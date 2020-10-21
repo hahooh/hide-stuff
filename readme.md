@@ -7,7 +7,7 @@ Is a chrome extension that can hide stuffs on web page that are blocking content
 
 ## Available From
 * [Google Chrome](https://chrome.google.com/webstore/detail/hide-stuff/aahinjjobiohbnfhapifakplkaioojai).
-* [MS edge](https://microsoftedge.microsoft.com/addons/detail/cahgiohifpleaknhpcfelgjahjenjlcn)
+* [MS Edge](https://microsoftedge.microsoft.com/addons/detail/cahgiohifpleaknhpcfelgjahjenjlcn)
 
 ## How to install
 * Follow instructions from https://developer.chrome.com/extensions/getstarted#manifest
