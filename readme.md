@@ -5,8 +5,9 @@ Is a chrome extension that can hide stuffs on web page that are blocking content
 * try with path of the element to remember which element user hide
 * better ui for errors
 
-## Google Chrome Extension URL
-* Finally it is approved. Download from [here](https://chrome.google.com/webstore/detail/hide-stuff/aahinjjobiohbnfhapifakplkaioojai).
+## Available From
+* [Google Chrome](https://chrome.google.com/webstore/detail/hide-stuff/aahinjjobiohbnfhapifakplkaioojai).
+* [MS edge](https://microsoftedge.microsoft.com/addons/detail/cahgiohifpleaknhpcfelgjahjenjlcn)
 
 ## How to install
 * Follow instructions from https://developer.chrome.com/extensions/getstarted#manifest
